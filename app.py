@@ -4,12 +4,13 @@ from joblib import load
 import pandas as pd
 
 app = Flask(__name__)
-pipeline = load('assets/pipeline_w_miles.joblib')
+trained_machine_learning_model = load('assets/pipeline_w_miles.joblib')
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
+# 4/2/40/1/16
 @app.route('/generatepredictions')
 @app.route('/generatepredictions/<Quarter>/<Origin>/<Dest>/<NumTicketsOrdered>/<AirlineCompany>')
 def predict(Quarter, Origin, Dest, NumTicketsOrdered, AirlineCompany):
@@ -23,7 +24,7 @@ def predict(Quarter, Origin, Dest, NumTicketsOrdered, AirlineCompany):
             'AirlineCompany': [int(AirlineCompany)]
         })
 
-        PricePerTicket = str(pipeline.predict(df)[0])[0:6]
+        PricePerTicket = str(trained_machine_learning_model.predict(df)[0])[0:6]
         PricePerTicket = f"${PricePerTicket}"
 
         return render_template('predictions.html', pricePerTicket=PricePerTicket)
