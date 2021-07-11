@@ -3,9 +3,8 @@ from data import origin_dict, dest_dict, miles_dict
 from joblib import load
 import pandas as pd
 
-
 app = Flask(__name__)
-trained_machine_learning_model = load('assets/pipeline_w_miles.joblib')
+trained_machine_learning_model = load('static/assets/pipeline_w_miles.joblib')
 
 @app.route('/')
 def home():
@@ -14,7 +13,7 @@ def home():
 # 4/2/40/1/16
 @app.route('/generatepredictions')
 @app.route('/generatepredictions/<Quarter>/<Origin>/<Dest>/<NumTicketsOrdered>/<AirlineCompany>')
-def predict(Quarter=0, Origin=0, Dest=0, NumTicketsOrdered=0, AirlineCompany=0):
+def predict(Quarter=4, Origin=2, Dest=16, NumTicketsOrdered=1, AirlineCompany=1):
     try:
         df = pd.DataFrame({
             'Quarter': [int(Quarter)],
